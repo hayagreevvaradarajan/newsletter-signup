@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const requests = require('requests');
 const { urlencoded } = require('body-parser');
 const https = require('https');
+require('dotenv').config({path: __dirname + '/.env'});
 
 const app = express();
 app.use(bodyParser.urlencoded({extended: true}));
@@ -14,10 +15,10 @@ let constructUrl = (audienceId) => {
 };
 
 let getAudienceId = () => {
-    return "f01e3b6f4d";
+    return process.env.AudienceID;
 };
 let getAPIKey = () => {
-    return "hayagreev:449e9939675a635687927930540464b7-us20";
+    return process.env.APIKey;
 };
 
 let makeRequest = (jsonData,res) => {
@@ -66,6 +67,7 @@ app.post('/', (req,res) => {
     makeRequest(jsonData,res);
 });
 
-app.listen(process.env.PORT || 3000, () => {
-    console.log("The server is up an running in port 3000!");
+const port = process.env.PORT;
+app.listen(port, () => {
+    console.log(`Listening on port ${port}`);
 });
